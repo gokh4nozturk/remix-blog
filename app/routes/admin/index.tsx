@@ -2,8 +2,8 @@ import { Link } from 'remix';
 
 export default function AdminIndex() {
   return (
-    <p>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Link to="new">Create a New Post</Link>
-    </p>
+    </div>
   );
 }

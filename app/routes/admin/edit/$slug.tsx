@@ -1,9 +1,15 @@
-import { useTransition, useActionData, redirect } from 'remix';
-import type { ActionFunction } from 'remix';
-import invariant from 'tiny-invariant';
 import { Transition } from '@remix-run/react/transition';
-import { createPost } from '~/post';
+import {
+  ActionFunction,
+  LoaderFunction,
+  redirect,
+  useActionData,
+  useLoaderData,
+  useTransition,
+} from 'remix';
+import invariant from 'tiny-invariant';
 import FileForm from '~/components/FileForm';
+import { createPost, getPost } from '~/post';
 
 type PostError = {
   title?: boolean;
@@ -36,8 +42,15 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect('/admin');
 };
 
-export default function NewPost() {
+export const loader: LoaderFunction = async ({ params }) => {
+  invariant(params.slug, 'expected params.slug');
+  return getPost(params.slug);
+};
+
+export default function Edit() {
   const errors: any = useActionData();
   const transition: Transition = useTransition();
-  return <FileForm errors={errors} transition={transition} />;
+  const post = useLoaderData();
+
+  return <FileForm post={post} errors={errors} transition={transition} />;
 }

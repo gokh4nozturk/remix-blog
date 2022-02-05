@@ -5,12 +5,16 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  MetaFunction,
+  Link,
 } from 'remix';
-import type { MetaFunction } from 'remix';
-import { Link } from 'remix';
 
 export const meta: MetaFunction = () => {
-  return { title: 'New Remix App' };
+  return {
+    title: 'New Remix App',
+    description: 'A new remix app',
+    url: 'https://remix.app',
+  };
 };
 
 export default function App() {
@@ -26,7 +30,9 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <Link to="/posts">Posts</Link>
+        <Link to="admin" style={{ display: 'block' }}>
+          Admin
+        </Link>
         {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
     </html>
